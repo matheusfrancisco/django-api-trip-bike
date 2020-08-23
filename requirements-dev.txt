@@ -1,0 +1,6 @@
+-r requirements.txt
+flake8
+black
+pre-commit
+coverage
+model-bakery==1.0.2
