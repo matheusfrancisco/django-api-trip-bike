@@ -1,0 +1,3 @@
+
+setup:
+	pre-commit install
