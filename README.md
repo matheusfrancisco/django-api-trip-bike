@@ -97,6 +97,6 @@ Response:
 
 
 ## TODO
-- [ ] Add pagination to return 100 trips per page on api/v1/trip/list
+- [x] Add pagination to return 100 trips per page on api/v1/trip/list
 - [ ] Add celery to background tasks
 - [ ] Try to move business logic to domain layer
