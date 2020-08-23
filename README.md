@@ -1,8 +1,10 @@
 ## Api in Django
 
-Install
+Install, make setup will enable pre-commit and lint,
+always before commit will run test and lint.
 ```
 pip install -r requirements-dev.txt
+make setup
 ```
 
 ## Run test
