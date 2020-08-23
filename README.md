@@ -94,3 +94,8 @@ Response:
 ```
 {"id":1,"start_date":"2020-08-20T11:20:29Z","end_date":"2020-08-20T13:21:33Z","classification":2,"rate":1}% 
 ```
+
+
+## TODO
+- [ ] Add celery to background tasks
+- [ ] Try to move business logic to domain layer
