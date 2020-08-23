@@ -4,7 +4,7 @@ repos:
   hooks:
   - id: lint
     entry: flake8
-    args: [--max-line-length=90, $$(git diff-tree --no-commit-id --name-only -r  4aff81a..HEAD | grep '.\+\.py') ]                                                                            
+    args: [--max-line-length=90]
     name: Lint
     language: system
     types: [file, python]

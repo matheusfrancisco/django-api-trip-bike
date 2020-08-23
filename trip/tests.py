@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 from .models import Trip
 from .serializers import TravelSerialization
-# Create your tests here.
 
 
 class BaseViewTest(APITestCase):
@@ -68,6 +67,16 @@ class GetTripTest(BaseViewTest):
         serialized = TravelSerialization(expected, many=True)
         self.assertEqual(response.data, serialized.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_should_not_return_trips(self):
+        response = self.client.get(
+            reverse("list-travels")
+        )
+        self.assertEqual(
+            response.data['detail'].title(),
+            'Authentication Credentials Were Not Provided.'
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_a_trip(self):
         self.login_client("temporary", "temporary")
