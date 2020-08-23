@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 
 from rest_framework.response import Response
@@ -8,6 +7,7 @@ from rest_framework import status
 from trip.serializers import TravelSerialization
 from trip.models import Trip
 from trip.decorators import validate_request_data
+from trip_api.pagination import CustomPagination
 
 
 class TravelView(generics.RetrieveUpdateDestroyAPIView):
@@ -15,13 +15,22 @@ class TravelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Trip.objects.all()
     # Set is necessary be Authenticated to access class
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
+    serializer_class = TravelSerialization
 
     def get(self, request) -> Response:
-        serializer = TravelSerialization(
-            self.queryset.filter(user=request.user),
-            many=True
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(user=request.user)
         )
-        return Response(serializer.data)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+            data = result.data
+        else:
+            serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+        return Response(data)
 
 
 class TripDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -39,7 +48,7 @@ class TripDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Trip.DoesNotExist:
             return Response(
                 data={
-                    "message": "Trip with id: {} does not exist".format(kwargs["pk"])
+                    "message": f"Trip with id: {kwargs['pk']} does not exist"
                 },
                 status=status.HTTP_404_NOT_FOUND
             )

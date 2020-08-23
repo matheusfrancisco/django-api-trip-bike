@@ -52,12 +52,19 @@ class BaseViewTest(APITestCase):
         baker.make(
             Trip,
             user=user_fake,
-            _quantity=10,
+            _quantity=1000,
             classification=1,
         )
 
 
 class GetTripTest(BaseViewTest):
+    def test_get_all_return_only_100_per_page(self):
+        self.login_client("temporaryy", "temporaryy")
+        response = self.client.get(
+            reverse("list-travels")
+        )
+        self.assertEqual(len(response.data["results"]), 100)
+
     def test_get_all_trip_to_user_auth(self):
         self.login_client("temporary", "temporary")
         response = self.client.get(
@@ -65,7 +72,7 @@ class GetTripTest(BaseViewTest):
         )
         expected = Trip.objects.filter(user=self.user_to_filter)
         serialized = TravelSerialization(expected, many=True)
-        self.assertEqual(response.data, serialized.data)
+        self.assertEqual(response.data["results"], serialized.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_should_not_return_trips(self):
