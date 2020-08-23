@@ -1,5 +1,7 @@
 ## Api in Django
 
+![CI](https://github.com/matheusfrancisco/django-api-trip-bike/workflows/CI/badge.svg?branch=master)
+
 Install, make setup will enable pre-commit and lint,
 always before commit will run test and lint.
 ```
