@@ -13,12 +13,10 @@ class Trip(models.Model):
         (3, "Lazer"),
         (4, "Deslocamento"),
     )
-    classification = models.CharField(
-        max_length=32,
-        blank=True,
-        null=True,
+    classification = models.IntegerField(
         choices=CLASSIFICATIONS,
-        verbose_name="Classification",
+        blank=True,
+        null=True
     )
     rate = models.IntegerField(
         null=True,

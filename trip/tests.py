@@ -113,7 +113,7 @@ class UpdateTripTest(BaseViewTest):
         )
         self.assertEqual(
             trip.classification,
-            '1'
+            1
         )
 
     def test_update_a_invalida_classification(self):
